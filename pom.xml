@@ -49,6 +49,23 @@
                         http://www.example.com/Alejandrocg024/pic
                 </picUrl>
             </properties>
+        </developer>ç
+        <developer>
+            <id>guillegomezz8</id>
+            <name>Guillermo Gomez</name>
+            <email>guigomrom@alum.us.es</email>
+            <url>https://github.com/guillegomezz8</url>
+            <organization>Proceso Software y Gestión II</organization>
+            <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+            <properties>
+                <picUrl>
+                        http://www.example.com/guillegomezz8/pic
+                </picUrl>
+            </properties>
         </developer>
     </developers>
 
