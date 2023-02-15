@@ -14,7 +14,7 @@
     </parent>
     <name>petclinic</name>
 
-    <properties>
+    <properties>  
 
         <!-- Generic properties -->
         <java.version>11</java.version>
@@ -31,6 +31,26 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
+
+    <developers>
+        <developer>
+            <id>Alejandrocg024</id>
+            <name>Alejandro Campano</name>
+            <email>alecamgal1@alum.us.es</email>
+            <url>https://github.com/Alejandrocg024</url>
+            <organization>Proceso Software y Gestión II</organization>
+            <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+            <properties>
+                <picUrl>
+                        http://www.example.com/Alejandrocg024/pic
+                </picUrl>
+            </properties>
+        </developer>
+    </developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
