@@ -8,7 +8,7 @@
     <h2>Welcome to the PSG2-2223-G3-31 Petclinic</h2>
     <div class="row">
         <div class="col-md-12">
-            <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
+            <spring:url value="/resources/images/gato.png" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
         </div>
     </div>
