@@ -84,6 +84,23 @@
                 </picUrl>
             </properties>
         </developer>
+        <developer>
+            <id>ignnarber</id>
+            <name>Ignacio Naredo</name>
+            <email>nachonaredobernardos@gmail.com</email>
+            <url>https://github.com/Naredo</url>
+            <organization>Proceso Software y Gestión II</organization>
+            <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>Europe/Madrid</timezone>
+            <properties>
+                <picUrl>
+                        http://www.example.com/ignnarber/pic
+                </picUrl>
+            </properties>
+        </developer>
     </developers>
 
     <dependencies>
