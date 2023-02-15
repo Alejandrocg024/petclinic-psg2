@@ -67,6 +67,23 @@
                 </picUrl>
             </properties>
         </developer>
+        <developer>
+            <id>manortbla</id>
+            <name>Manuel Ortiz</name>
+            <email>manuortizb@gmail.com</email>
+            <url>https://github.com/manortbla</url>
+            <organization>Proceso Software y Gestión II</organization>
+            <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+            <properties>
+                <picUrl>
+                        http://www.example.com/manortbla/pic
+                </picUrl>
+            </properties>
+        </developer>
     </developers>
 
     <dependencies>
