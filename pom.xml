@@ -3,14 +3,14 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>es.us.psg2</groupId>
-    <artifactId>spring-petclinic.psg2.2223-G3-31</artifactId>
-    <version>1.0.0</version>
+    <groupId>org.springframework.samples</groupId>
+    <artifactId>spring-petclinic</artifactId>
+    <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
         <groupId>es.us.psg2</groupId>
-        <artifactId>spring-petclinic.psg2.2223-G3-31</artifactId>
-        <version>1.0.0</version>
+        <artifactId>sprint-petclinic.psg2.2223-G3-31</artifactId>
+        <version>1.00</version>
     </parent>
     <name>PSG2-2223-G3-31 Petclinic</name>
 
