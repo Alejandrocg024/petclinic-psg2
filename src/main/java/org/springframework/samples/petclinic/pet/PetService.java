@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,6 @@ public class PetService {
 	private PetRepository petRepository;
 	
 	private VisitRepository visitRepository;
-	
 
 	@Autowired
 	public PetService(PetRepository petRepository,
@@ -83,8 +83,8 @@ public class PetService {
     }
 	
 	@Transactional(readOnly = true)
-    public List<Pet> findByOwner(Integer id){
-        return this.petRepository.findByOwnerId(id);
+   	public List<Pet> findPetsByOwner(Integer id){
+        return this.petRepository.findPetsByOwner(id);
     }
 
 }

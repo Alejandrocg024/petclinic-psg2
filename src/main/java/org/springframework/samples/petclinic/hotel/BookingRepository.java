@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
-public interface PetHotelBookingRepository extends CrudRepository<PetHotelBooking, Integer> {
+public interface BookingRepository extends CrudRepository<Booking, Integer> {
+    List<Booking> findAll();
 
-    @Query("SELECT p FROM PetHotelBooking p WHERE p.owner.id=?1")
-	List<PetHotelBooking> findByOwnerId(Integer id);
+    @Query("SELECT p FROM Booking p WHERE p.owner.id=?1")
+	List<Booking> findBookingsByOwnerId(Integer id);
     
     
 }
