@@ -16,9 +16,11 @@
 package org.springframework.samples.petclinic.pet;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +38,6 @@ public class PetService {
 	private PetRepository petRepository;
 	
 	private VisitRepository visitRepository;
-	
 
 	@Autowired
 	public PetService(PetRepository petRepository,
@@ -76,5 +77,14 @@ public class PetService {
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
 	}
+
+	public List<Pet> getAllPets(){
+        return this.petRepository.findAll();
+    }
+	
+	@Transactional(readOnly = true)
+   	public List<Pet> findPetsByOwner(Integer id){
+        return this.petRepository.findPetsByOwner(id);
+    }
 
 }
