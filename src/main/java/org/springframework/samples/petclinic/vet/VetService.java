@@ -20,7 +20,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.samples.petclinic.user.AuthoritiesService;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -32,7 +34,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class VetService {
 
 	private VetRepository vetRepository;
+		
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	public VetService(VetRepository vetRepository) {
@@ -43,5 +50,23 @@ public class VetService {
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
 	}	
+
+
+	@Transactional(readOnly = true)
+	public Vet findVetById(int id) throws DataAccessException {
+		return vetRepository.findById(id);
+	}
+
+	@Transactional
+	public void saveVet(Vet vet) throws DataAccessException {
+		//creating vet
+		vetRepository.save(vet);		
+		//creating user
+		userService.saveUser(vet.getUser());
+		//creating authorities
+		authoritiesService.saveAuthorities(vet.getUser().getUsername(), "vet");
+	}	
+
+	
 
 }
