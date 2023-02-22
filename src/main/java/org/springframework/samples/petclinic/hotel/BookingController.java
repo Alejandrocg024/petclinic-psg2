@@ -1,23 +1,19 @@
 package org.springframework.samples.petclinic.hotel;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.samples.petclinic.owner.OwnerService;
-import org.springframework.samples.petclinic.pet.Pet;
-import org.springframework.samples.petclinic.pet.PetRepository;
 import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +33,9 @@ public class BookingController {
 
     @Autowired
     private OwnerService ownerService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "/{ownerId}/new")
 	public String showBookingForm(@PathVariable("ownerId") Integer ownerId, ModelMap model) {
@@ -64,10 +63,14 @@ public class BookingController {
 	}
     
     @GetMapping("/{ownerId}")
-    public ModelAndView showBookingList(@PathVariable("ownerId") Integer ownerId) {
+    public ModelAndView showBookingList(@PathVariable("ownerId") Integer ownerId, Principal principal) {
         ModelAndView mav = new ModelAndView(HOTEL_PET_BOOKING_LIST);
         mav.addObject("bookings", bookingService.findBookingsByOwner(ownerId));
         mav.addObject("owner", ownerService.findOwnerById(ownerId));
+        User user = userService.findUser(principal.getName()).get();
+		Integer owner = ownerService.findOwnerByUserName(user.getUsername()).getId();
+		Boolean EsUserLogeado = owner.equals(ownerId);
+		mav.addObject("esUserLogeado", EsUserLogeado);
         return mav;
     }
 }

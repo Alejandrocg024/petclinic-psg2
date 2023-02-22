@@ -36,8 +36,9 @@
     <spring:url value="/booking/{ownerId}/new" var="newBooking">
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(newBooking)}" class="btn btn-default">Nueva Reserva</a>
-
+    <c:if test = "${esUserLogeado == true}">
+        <a href="${fn:escapeXml(newBooking)}" class="btn btn-default">Nueva Reserva</a>
+    </c:if>
     <br/>
     <br/>
     <br/>
