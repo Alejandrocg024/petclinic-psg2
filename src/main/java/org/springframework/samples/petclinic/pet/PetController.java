@@ -65,7 +65,7 @@ public class PetController {
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
 	}
-	@GetMapping("/delete/{id}")
+	@GetMapping("/pets/delete/{id}")
 	public ModelAndView deletePet(@PathVariable("id") Integer id){
 		petService.deletePet(id);
 		return new ModelAndView("redirect:/pet");

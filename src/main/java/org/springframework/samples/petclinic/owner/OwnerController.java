@@ -109,7 +109,7 @@ public class OwnerController {
 		}
 	}
 	// Delete 
-	@GetMapping("/delete/{id}")
+	@GetMapping( value = "/owners/delete/{id}")
 	public ModelAndView deleteOwner(@PathVariable("id")Integer id){
 		ownerService.deleteOwner(id);
 		return new ModelAndView("redirect:/owner");

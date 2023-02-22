@@ -75,7 +75,7 @@ public class UserController {
 			return "redirect:/";
 		}
 	}
-	@GetMapping("/delete/{id}")
+	@GetMapping("/users/delete/{id}")
 	public ModelAndView deleteUser(@PathVariable("id") String id){
 		userService.deleteUser(id);
 		return new ModelAndView("redirect:/User");
