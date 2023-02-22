@@ -71,6 +71,10 @@ public class PetService {
 			}else
 				petRepository.save(pet);
 	}
+	@Transactional
+	public void deletePet(int id){
+		petRepository.deleteById(id);
+	}
 
 
 	public Collection<Visit> findVisitsByPetId(int petId) {

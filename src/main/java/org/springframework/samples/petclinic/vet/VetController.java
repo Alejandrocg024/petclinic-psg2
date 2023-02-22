@@ -18,7 +18,9 @@ package org.springframework.samples.petclinic.vet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
@@ -57,6 +59,11 @@ public class VetController {
 		Vets vets = new Vets();
 		vets.getVetList().addAll(this.vetService.findVets());
 		return vets;
+	}
+	@GetMapping("/delete/{id}")
+	public ModelAndView deleteVet(@PathVariable("id") Integer id){
+		vetService.deleteVet(id);
+		return new ModelAndView("redirect:/vet");
 	}
 
 }
