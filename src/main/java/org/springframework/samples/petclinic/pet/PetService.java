@@ -76,9 +76,19 @@ public class PetService {
 		petRepository.deleteById(id);
 	}
 
-
+	@Transactional(readOnly = true)
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
 	}
+
+	@Transactional(readOnly = true)
+	public Visit findVisitsById(int visitId) {
+		return visitRepository.findById(visitId);
+	}
+
+	@Transactional
+    public void deleteVisit(int id) {
+		visitRepository.deleteById(id);
+    }
 
 }

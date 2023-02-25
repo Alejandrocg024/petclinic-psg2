@@ -31,7 +31,7 @@ import org.springframework.samples.petclinic.owner.OwnerRepository;
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface OwnerRepository extends Repository<Owner, Integer>,CrudRepository<Owner,Integer> {
+public interface OwnerRepository extends CrudRepository<Owner, Integer> {
 
 	/**
 	 * Save an <code>Owner</code> to the data store, either inserting or updating it.

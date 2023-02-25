@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.pet;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -65,10 +66,13 @@ public class PetController {
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
 	}
-	@GetMapping("/pets/delete/{id}")
-	public ModelAndView deletePet(@PathVariable("id") Integer id){
-		petService.deletePet(id);
-		return new ModelAndView("redirect:/pet");
+	@GetMapping("/pets/delete/{petId}")
+	public ModelAndView deletePet(@PathVariable("petId") Integer petId, @PathVariable("ownerId") int ownerId){
+		Owner owner = ownerService.findOwnerById(ownerId);
+		Pet pet = petService.findPetById(petId);
+		owner.removePet(pet);
+		petService.deletePet(petId);
+		return new ModelAndView("redirect:/owners/{ownerId}");
 	}
         
         /*@ModelAttribute("pet")

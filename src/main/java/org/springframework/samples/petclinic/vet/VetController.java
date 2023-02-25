@@ -60,10 +60,10 @@ public class VetController {
 		vets.getVetList().addAll(this.vetService.findVets());
 		return vets;
 	}
-	@GetMapping("/vets/delete/{id}")
-	public ModelAndView deleteVet(@PathVariable("id") Integer id){
-		vetService.deleteVet(id);
-		return new ModelAndView("redirect:/vet");
+	@GetMapping("/vets/delete/{vetId}")
+	public ModelAndView deleteVet(@PathVariable("vetId") Integer vetId){
+		vetService.deleteVet(vetId);
+		return new ModelAndView("redirect:/vets");
 	}
 
 }

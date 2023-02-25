@@ -67,7 +67,7 @@ public class Owner extends Person {
 	private Set<Pet> pets;
 	
 	//
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	//
