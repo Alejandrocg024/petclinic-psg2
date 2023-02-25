@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
@@ -22,7 +23,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
+import org.springframework.samples.petclinic.user.User;
 import org.springframework.samples.petclinic.user.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,8 +50,12 @@ public class OwnerController {
 	private final OwnerService ownerService;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
+		this.userService = userService;
 	}
 
 	@InitBinder
@@ -142,7 +149,7 @@ public class OwnerController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
-	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Principal principal) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		mav.addObject(this.ownerService.findOwnerById(ownerId));
 		return mav;

@@ -5,13 +5,13 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="vets">
-    <h2>Veterinarians</h2>
+    <h2>Veterinarios</h2>
 
     <table id="vetsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Specialties</th>
+            <th>Nombre</th>
+            <th>Especialidades</th>
             <security:authorize access="hasAnyRole('admin', 'veterinarian')">
                 <th>
                     Eliminar
@@ -29,7 +29,7 @@
                     <c:forEach var="specialty" items="${vet.specialties}">
                         <c:out value="${specialty.name} "/>
                     </c:forEach>
-                    <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
+                    <c:if test="${vet.nrOfSpecialties == 0}">ninguno</c:if>
                 </td>
                 <sec:authorize access="hasAnyRole('admin', 'veterinarian')" > 
                     <td> 
@@ -46,7 +46,7 @@
     <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">View as XML</a>
+                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">Ver como XML</a>
             </td>            
         </tr>
     </table>
