@@ -40,6 +40,15 @@
                 </div>
                 <petclinic:inputField label="Fecha de Inicio" name="startDate"/>
                 <petclinic:inputField label="Fecha de Fin" name="endDate"/>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <div style="color: red;">
+                            <c:out value ="${Mensaje}"/>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

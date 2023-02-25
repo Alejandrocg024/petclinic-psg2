@@ -49,16 +49,20 @@ public class BookingController {
 	}
 
     @PostMapping("/{ownerId}/new")
-    public String processCreationForm(@PathVariable("ownerId") Integer ownerId, @Valid Booking booking, BindingResult result) {
-		if (result.hasErrors()) {
-			return VIEWS_HOTEL_PET_BOOKING_CREATE;
-		}
-		else {
-            Owner owner = ownerService.findOwnerById(ownerId);
+    public ModelAndView processCreationForm(@PathVariable("ownerId") Integer ownerId, @Valid Booking booking, BindingResult result) {
+		ModelAndView res = new ModelAndView(VIEWS_HOTEL_PET_BOOKING_CREATE);
+        Owner owner = ownerService.findOwnerById(ownerId);
+        res.addObject("owner", owner);
+        res.addObject("pets", petService.findPetsByOwner(ownerId));
+        if (result.hasErrors()) {
+			return res;
+		} else if(booking.getStartDate().isAfter(booking.getEndDate()) || booking.getStartDate().isEqual(booking.getEndDate())){
+            res.addObject("Mensaje", "La fecha de fin debe ser posterior a la fecha inicial");
+            return res;
+        } else {
             booking.setOwner(owner);
 			this.bookingService.save(booking);
-			
-			return "redirect:/booking/{ownerId}";
+			return new ModelAndView("redirect:/booking/{ownerId}");
 		}
 	}
     
