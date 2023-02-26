@@ -90,6 +90,7 @@ public class PetService {
 	@Transactional
     public void deleteVisit(int id) {
 		visitRepository.deleteById(id);
+	}
 
   @Transactional(readOnly = true)
 	public List<Pet> getAllPets(){
