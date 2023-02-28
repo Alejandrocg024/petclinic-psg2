@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.pet;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -63,6 +65,14 @@ public class PetController {
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
+	}
+	@GetMapping("/pets/delete/{petId}")
+	public ModelAndView deletePet(@PathVariable("petId") Integer petId, @PathVariable("ownerId") int ownerId){
+		Owner owner = ownerService.findOwnerById(ownerId);
+		Pet pet = petService.findPetById(petId);
+		owner.removePet(pet);
+		petService.deletePet(petId);
+		return new ModelAndView("redirect:/owners/{ownerId}");
 	}
         
         /*@ModelAttribute("pet")

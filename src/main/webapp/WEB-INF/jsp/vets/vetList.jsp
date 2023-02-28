@@ -12,6 +12,11 @@
         <tr>
             <th>Nombre</th>
             <th>Especialidades</th>
+            <security:authorize access="hasAnyRole('admin', 'veterinarian')">
+                <th>
+                    Eliminar
+                </th>
+            </security:authorize>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +31,13 @@
                     </c:forEach>
                     <c:if test="${vet.nrOfSpecialties == 0}">ninguno</c:if>
                 </td>
+                <sec:authorize access="hasAnyRole('admin', 'veterinarian')" > 
+                    <td> 
+                        <a href="/vets/delete/${vet.id}"> 
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>      
+                    </td>
+                </sec:authorize>
             </tr>
         </c:forEach>
         </tbody>

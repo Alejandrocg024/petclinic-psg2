@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
+	private UserService userService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -47,5 +48,9 @@ public class UserService {
 	
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
+	}
+	@Transactional
+	public void deleteUser(String id){
+		userRepository.deleteById(id);
 	}
 }

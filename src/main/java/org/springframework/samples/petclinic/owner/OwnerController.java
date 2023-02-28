@@ -115,6 +115,13 @@ public class OwnerController {
 			return "owners/ownersList";
 		}
 	}
+	// Delete 
+	@GetMapping( value = "/owners/delete/{ownerId}")
+	public ModelAndView deleteOwner(@PathVariable("ownerId")Integer id){
+		ownerService.deleteOwner(id);
+		return new ModelAndView("redirect:/owners");
+	}
+	
 
 	@GetMapping(value = "/owners/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
