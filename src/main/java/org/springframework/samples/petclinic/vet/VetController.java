@@ -15,14 +15,28 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Juergen Hoeller
@@ -33,11 +47,51 @@ import java.util.Map;
 @Controller
 public class VetController {
 
+	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
+
 	private final VetService vetService;
 
+	private final SpecialtyService specialtyService;
+
 	@Autowired
-	public VetController(VetService clinicService) {
+	public VetController(VetService clinicService, SpecialtyService specialtyService) {
 		this.vetService = clinicService;
+		this.specialtyService = specialtyService;
+	}
+
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
+
+	@GetMapping(value = "/vets/new")
+	public ModelAndView initCreationForm() {
+		ModelAndView mav = new ModelAndView(VIEWS_VET_CREATE_OR_UPDATE_FORM);
+		Vet vet = new Vet();
+		List<Specialty> specialties = specialtyService.findSpecialties().stream().collect(Collectors.toList());
+		mav.addObject("specialties1",specialties);
+		mav.addObject("vet", vet);
+		return mav;
+	}
+
+	@PostMapping(value = "/vets/new")
+	public String processCreationForm(@Valid Vet vet, BindingResult result,
+	@RequestParam(required = false) Set<Integer> specialties) {
+		if (result.hasErrors()) {
+			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			Set<Specialty> specialtiesUpdated = new HashSet<Specialty>();
+			if (specialties != null) {
+				for (Integer s: specialties) {
+					Specialty newSpecialty = this.vetService.findSpecialtyById(s);
+					specialtiesUpdated.add(newSpecialty);
+				}
+			}
+			vet.setSpecialtiesInternal(specialtiesUpdated);
+			this.vetService.saveVet(vet);
+			return "redirect:/vets/" + vet.getId();
+		}
 	}
 
 	@GetMapping(value = { "/vets" })
@@ -64,6 +118,47 @@ public class VetController {
 	public ModelAndView deleteVet(@PathVariable("vetId") Integer vetId){
 		vetService.deleteVet(vetId);
 		return new ModelAndView("redirect:/vets");
+	}
+
+	@GetMapping("/vets/{vetId}")
+	public ModelAndView showVet(@PathVariable("vetId") int vetId) {
+		ModelAndView mav = new ModelAndView("vets/vetsDetails");
+		mav.addObject("vets",this.vetService.findVetById(vetId));
+		return mav;
+	}  
+	
+
+	@GetMapping(value = "/vets/{vetId}/edit")
+	public ModelAndView initUpdateVetForm(@PathVariable("vetId") int vetId) {
+		ModelAndView mav = new ModelAndView(VIEWS_VET_CREATE_OR_UPDATE_FORM);
+		Vet vet = this.vetService.findVetById(vetId);
+		List<Specialty> specialties = specialtyService.findSpecialties().stream().collect(Collectors.toList());
+		mav.addObject("specialties1",specialties);
+		mav.addObject("vet",vet);
+		return mav;
+	}
+
+	@PostMapping(value = "/vets/{vetId}/edit")
+	public String processUpdateVetForm(@Valid Vet vet, BindingResult result,
+			@PathVariable("vetId") int vetId,
+			@RequestParam(required = false) Set<Integer> specialties) {
+		if (result.hasErrors()) {
+			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			vet.setId(vetId);
+			//Actualizamos las especialidades
+			Set<Specialty> specialtiesUpdated = new HashSet<Specialty>();
+			if (specialties != null) {
+				for (Integer s: specialties) {
+					Specialty newSpecialty = this.vetService.findSpecialtyById(s);
+					specialtiesUpdated.add(newSpecialty);
+				}
+			}
+			vet.setSpecialtiesInternal(specialtiesUpdated);
+			this.vetService.saveVet(vet);
+			return "redirect:/vets";
+		}
 	}
 
 }

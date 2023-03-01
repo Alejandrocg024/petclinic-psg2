@@ -20,6 +20,8 @@ import java.util.Collection;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant
@@ -40,4 +42,15 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
 
+	Vet findById(int id) throws DataAccessException;
+
+	//void save(Vet vet) throws DataAccessException;
+	
+	@Query("select s from Specialty s where s.name = :name")
+	Specialty findSpecialtyByName(@Param("name") String name);
+
+	@Query("select s from Specialty s where s.id = :id")
+	Specialty findSpecialtyById(@Param("id") Integer id);
+
+	
 }
