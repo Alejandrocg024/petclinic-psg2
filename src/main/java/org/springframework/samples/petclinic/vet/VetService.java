@@ -16,7 +16,7 @@
 package org.springframework.samples.petclinic.vet;
 
 import java.util.Collection;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -32,16 +32,46 @@ import org.springframework.transaction.annotation.Transactional;
 public class VetService {
 
 	private VetRepository vetRepository;
-
+	private SpecialtyRepository specialtyRepository;
 
 	@Autowired
-	public VetService(VetRepository vetRepository) {
+	public VetService(VetRepository vetRepository , SpecialtyRepository specialtyRepository) {
 		this.vetRepository = vetRepository;
+		this.specialtyRepository = specialtyRepository;
 	}		
 
 	@Transactional(readOnly = true)	
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
+	}
+
+	@Transactional(readOnly = true)	
+    public Vet findVetById(Integer vetId) {
+        return vetRepository.findById(vetId).get();
+    }	
+
+	@Transactional(readOnly = true)	
+    public List<Specialty> findSpecialties() {
+        return specialtyRepository.findAll();
+    }
+
+	@Transactional
+	public void saveVet(Vet vet) throws DataAccessException {
+		vetRepository.save(vet);
+	}
+
+	@Transactional(readOnly = true)
+	public Specialty findSpecialtyByName(String name) {
+		return vetRepository.findSpecialtyByName(name);
+	}
+  
+	@Transactional
+	public void deleteVet(Integer id){
+		vetRepository.deleteById(id);
 	}	
 
+	@Transactional(readOnly = true)
+	public Specialty findSpecialtyById(Integer id) {
+		return vetRepository.findSpecialtyById(id);
+	}
 }

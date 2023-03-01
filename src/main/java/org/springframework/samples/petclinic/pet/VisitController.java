@@ -15,11 +15,15 @@
  */
 package org.springframework.samples.petclinic.pet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,6 +32,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -90,4 +95,18 @@ public class VisitController {
 		return "visitList";
 	}
 
+	@GetMapping("/owners/{ownerId}/pets/{petId}/visits/delete/{visitId}")
+	public ModelAndView deleteVisit(@PathVariable("visitId") Integer visitId, @PathVariable("ownerId") int ownerId, @PathVariable int petId) throws DataAccessException, DuplicatedPetNameException{
+		Pet pet = petService.findPetById(petId);
+		List<Visit> visits = new ArrayList<Visit>(pet.getVisits());
+		for (Visit v: visits){
+			if(v.getId() == null){
+				pet.removeVisit(v); //borrar la visita vacia que se crea en el controlador
+			} else if (v.getId() == visitId){
+				pet.removeVisit(v); //borrar la visita buscada
+			}
+		}
+		petService.deleteVisit(visitId);
+		return new ModelAndView("redirect:/owners/{ownerId}");
+	}
 }
