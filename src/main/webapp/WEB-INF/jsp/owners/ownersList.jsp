@@ -6,16 +6,17 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
-    <h2>Owners</h2>
+    <h2>Propietarios</h2>
 
     <table id="ownersTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Address</th>
-            <th>City</th>
-            <th style="width: 120px">Telephone</th>
-            <th>Pets</th>
+            <th style="width: 150px;">Nombre</th>
+            <th style="width: 200px;">Direccion</th>
+            <th>Ciudad</th>
+            <th style="width: 120px">Telefono</th>
+            <th>Mascota</th>
+            <th>Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +41,14 @@
                     <c:forEach var="pet" items="${owner.pets}">
                         <c:out value="${pet.name} "/>
                     </c:forEach>
+                </td>
+                <td>
+                    <spring:url value="/owners/delete/{ownerId}" var="deleteUrl">
+                        <spring:param name="ownerId" value="${owner.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(deleteUrl)}"> 
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
                 </td>
                 
       

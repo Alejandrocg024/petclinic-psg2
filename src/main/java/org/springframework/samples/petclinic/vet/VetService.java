@@ -64,6 +64,11 @@ public class VetService {
 	public Specialty findSpecialtyByName(String name) {
 		return vetRepository.findSpecialtyByName(name);
 	}
+  
+	@Transactional
+	public void deleteVet(Integer id){
+		vetRepository.deleteById(id);
+	}	
 
 	@Transactional(readOnly = true)
 	public Specialty findSpecialtyById(Integer id) {

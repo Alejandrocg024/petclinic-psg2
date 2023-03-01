@@ -27,7 +27,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -41,6 +43,9 @@ public class UserController {
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
 	private final OwnerService ownerService;
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	public UserController(OwnerService clinicService) {
@@ -69,6 +74,11 @@ public class UserController {
 			this.ownerService.saveOwner(owner);
 			return "redirect:/";
 		}
+	}
+	@GetMapping("/users/delete/{id}")
+	public ModelAndView deleteUser(@PathVariable("id") String id){
+		userService.deleteUser(id);
+		return new ModelAndView("redirect:/User");
 	}
 
 }
