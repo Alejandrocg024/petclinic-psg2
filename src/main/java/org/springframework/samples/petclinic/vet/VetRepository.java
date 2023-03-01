@@ -44,7 +44,7 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
 
 	Vet findById(int id) throws DataAccessException;
 
-	void save(Vet vet) throws DataAccessException;
+	//void save(Vet vet) throws DataAccessException;
 	
 	@Query("select s from Specialty s where s.name = :name")
 	Specialty findSpecialtyByName(@Param("name") String name);

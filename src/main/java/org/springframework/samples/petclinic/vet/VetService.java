@@ -47,7 +47,7 @@ public class VetService {
 
 	@Transactional(readOnly = true)	
     public Vet findVetById(Integer vetId) {
-        return vetRepository.findById(vetId);
+        return vetRepository.findById(vetId).get();
     }	
 
 	@Transactional(readOnly = true)	
