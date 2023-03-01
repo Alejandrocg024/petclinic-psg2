@@ -41,9 +41,15 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
 
-	@Query("SELECT vet FROM Vet vet WHERE vet.id =:id")
-	public Vet findById(@Param("id") int id);
+	Vet findById(int id) throws DataAccessException;
 
 	void save(Vet vet) throws DataAccessException;
+	
+	@Query("select s from Specialty s where s.name = :name")
+	Specialty findSpecialtyByName(@Param("name") String name);
 
+	@Query("select s from Specialty s where s.id = :id")
+	Specialty findSpecialtyById(@Param("id") Integer id);
+
+	
 }

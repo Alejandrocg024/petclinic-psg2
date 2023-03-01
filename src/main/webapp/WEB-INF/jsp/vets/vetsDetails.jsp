@@ -19,7 +19,12 @@
             <tr>
                 <th>Specialties</th>
                 <td>
-                    <c:out value="${vets.specialties}"/>
+                    <c:if test="${vets.nrOfSpecialties > 0}">
+                        <c:forEach var="specialty" items="${vets.specialties}" varStatus = "loop">
+                        <c:out value="${specialty.name}"/> 
+                        <c:if test = "${not loop.last}">, </c:if>
+                    </c:forEach>
+                    </c:if>
                     <c:if test="${vets.nrOfSpecialties == 0}">none</c:if>
                 </td>
             </tr>

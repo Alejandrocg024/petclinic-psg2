@@ -13,6 +13,8 @@
         <tr>
             <th>Name</th>
             <th>Specialties</th>
+
+
         </tr>
         </thead>
         <tbody>
@@ -22,12 +24,16 @@
                     <spring:url value="/vets/{vetId}" var="vetUrl">
                         <spring:param name="vetId" value="${vet.id}"/>
                     </spring:url>
+                    
                     <a href="${fn:escapeXml(vetUrl)}"><c:out value="${vet.firstName} ${vet.lastName}"/></a>
+                    <div>
+                        
+                    </div>
                 </td>
-
                 <td>
-                    <c:forEach var="specialty" items="${vet.specialties}">
-                        <c:out value="${specialty.name} "/>
+                    <c:forEach var="specialty" items="${vet.specialties}" varStatus = "loop">
+                        <c:out value="${specialty.name}"/> 
+                        <c:if test = "${not loop.last}">, </c:if>
                     </c:forEach>
                     <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
                 </td>

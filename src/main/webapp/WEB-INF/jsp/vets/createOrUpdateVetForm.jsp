@@ -14,9 +14,22 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="First Name" name="firstName"/>
             <petclinic:inputField label="Last Name" name="lastName"/>
-            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Password" name="user.password"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Specialties</label>
+                <div class="col-sm-10">
+                    <c:forEach var="specialty" items="${specialties1}">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="specialties" value="${specialty.id}"
+                                    <c:if test="${vet.specialties.contains(specialty)}">checked</c:if>
+                                > ${specialty.name}
+                            </label>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

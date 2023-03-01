@@ -16,13 +16,11 @@
 package org.springframework.samples.petclinic.vet;
 
 import java.util.Collection;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.samples.petclinic.user.AuthoritiesService;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -34,39 +32,41 @@ import org.springframework.samples.petclinic.user.AuthoritiesService;
 public class VetService {
 
 	private VetRepository vetRepository;
-		
-	@Autowired
-	private AuthoritiesService authoritiesService;
+	private SpecialtyRepository specialtyRepository;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	public VetService(VetRepository vetRepository) {
+	public VetService(VetRepository vetRepository , SpecialtyRepository specialtyRepository) {
 		this.vetRepository = vetRepository;
+		this.specialtyRepository = specialtyRepository;
 	}		
 
 	@Transactional(readOnly = true)	
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
-	}	
-
-
-	@Transactional(readOnly = true)
-	public Vet findVetById(int id) throws DataAccessException {
-		return vetRepository.findById(id);
 	}
+
+	@Transactional(readOnly = true)	
+    public Vet findVetById(Integer vetId) {
+        return vetRepository.findById(vetId);
+    }	
+
+	@Transactional(readOnly = true)	
+    public List<Specialty> findSpecialties() {
+        return specialtyRepository.findAll();
+    }
 
 	@Transactional
 	public void saveVet(Vet vet) throws DataAccessException {
-		//creating vet
-		vetRepository.save(vet);		
-		//creating user
-		userService.saveUser(vet.getUser());
-		//creating authorities
-		authoritiesService.saveAuthorities(vet.getUser().getUsername(), "vet");
-	}	
+		vetRepository.save(vet);
+	}
 
-	
+	@Transactional(readOnly = true)
+	public Specialty findSpecialtyByName(String name) {
+		return vetRepository.findSpecialtyByName(name);
+	}
 
+	@Transactional(readOnly = true)
+	public Specialty findSpecialtyById(Integer id) {
+		return vetRepository.findSpecialtyById(id);
+	}
 }
