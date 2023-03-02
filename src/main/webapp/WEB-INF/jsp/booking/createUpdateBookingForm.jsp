@@ -22,7 +22,7 @@
             <input type="hidden" name="id" value="${pet.id}"/>
             <div class="form-group has-feedback">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Due&#241;o</label>
+                    <label class="col-sm-2 control-label">Propietario</label>
                     <div class="col-sm-10">
                         <c:out value="${owner.firstName} ${owner.lastName}"/>
                     </div>
