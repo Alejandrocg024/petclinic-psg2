@@ -59,7 +59,7 @@
             
     <sec:authorize access="hasAuthority('admin')">
     <spring:url value="/vets/new" var="newUrl"></spring:url>
-	<a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Add Vet</a>
+	<a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Agregar Veterinario</a>
 	</sec:authorize>
 
 </petclinic:layout>

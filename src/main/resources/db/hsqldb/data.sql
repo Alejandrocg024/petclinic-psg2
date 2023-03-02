@@ -34,9 +34,9 @@ INSERT INTO vets(id, first_name,last_name) VALUES (4, 'Rafael', 'Ortega');
 INSERT INTO vets(id, first_name,last_name) VALUES (5, 'Henry', 'Stevens');
 INSERT INTO vets(id, first_name,last_name) VALUES (6, 'Sharon', 'Jenkins');
 
-INSERT INTO specialties VALUES (1, 'radiology');
-INSERT INTO specialties VALUES (2, 'surgery');
-INSERT INTO specialties VALUES (3, 'dentistry');
+INSERT INTO specialties VALUES (1, 'radiologia');
+INSERT INTO specialties VALUES (2, 'cirugia');
+INSERT INTO specialties VALUES (3, 'odontologia');
 
 INSERT INTO vet_specialties VALUES (2, 1);
 INSERT INTO vet_specialties VALUES (3, 2);

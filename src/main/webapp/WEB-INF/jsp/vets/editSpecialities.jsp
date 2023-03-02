@@ -9,7 +9,7 @@
 <petclinic:layout pageName="specialties">
 
 <div class="form-group">
-    <label class="col-sm-2 control-label">Specialties</label>
+    <label class="col-sm-2 control-label">Especialidades</label>
     <div class="col-sm-10">
         <c:forEach var="specialty" items="${specialties}">
             <div class="checkbox">
