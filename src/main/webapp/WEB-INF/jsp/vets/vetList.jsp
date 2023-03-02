@@ -42,9 +42,11 @@
                 </td>
                 <sec:authorize access="hasAnyRole('admin', 'veterinarian')" > 
                     <td> 
-                        <a href="/vets/delete/${vet.id}"> 
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </a>      
+                        <sec:authorize access='hasAuthority("admin")' >
+                            <a href="/vets/delete/${vet.id}"> 
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>  
+                        </sec:authorize>
                     </td>
                 </sec:authorize>
             </tr>

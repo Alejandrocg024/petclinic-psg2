@@ -60,15 +60,19 @@
                         <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
                         <dt>Tipo</dt>
                         <dd><c:out value="${pet.type.name}"/></dd>
-                        <dt>Borrar mascota</dt>
+                        <c:if test = "${esUserLogeado == true}">
+                            <dt>Borrar mascota</dt>
+                        </c:if>
                         <dd>
                             <spring:url value="/owners/{ownerId}/pets/delete/{petId}" var="deleteUrl">
                                 <spring:param name="ownerId" value="${owner.id}"/>
                                 <spring:param name="petId" value="${pet.id}"/>
                             </spring:url>
-                            <a href="${fn:escapeXml(deleteUrl)}"> 
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
+                            <c:if test = "${esUserLogeado == true}">
+                                <a href="${fn:escapeXml(deleteUrl)}"> 
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                            </c:if>
                         </dd> 
                         <dt></dt>
                         <dd>
@@ -101,9 +105,11 @@
                                         <spring:param name="petId" value="${pet.id}"/>
                                         <spring:param name="visitId" value="${visit.id}"/>
                                     </spring:url>
-                                    <a href="${fn:escapeXml(deleteVisit)}">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a> 
+                                    <c:if test = "${esUserLogeado == true}">
+                                        <a href="${fn:escapeXml(deleteVisit)}">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </a> 
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

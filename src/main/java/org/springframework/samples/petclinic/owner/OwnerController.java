@@ -151,6 +151,15 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Principal principal) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
+		User user = userService.findUser(principal.getName()).get();
+        Boolean EsUserLogeado;
+        if(user.getUsername().equals("admin1")){
+            EsUserLogeado = true;
+        } else {
+            Integer owner = ownerService.findOwnerByUserName(user.getUsername()).getId();
+            EsUserLogeado = owner.equals(ownerId);
+        }
+		mav.addObject("esUserLogeado", EsUserLogeado);
 		mav.addObject(this.ownerService.findOwnerById(ownerId));
 		return mav;
 	}

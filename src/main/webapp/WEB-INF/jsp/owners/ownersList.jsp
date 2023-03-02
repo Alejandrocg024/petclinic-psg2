@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 
 <petclinic:layout pageName="owners">
     <h2>Propietarios</h2>
@@ -16,7 +17,9 @@
             <th>Ciudad</th>
             <th style="width: 120px">Telefono</th>
             <th>Mascota</th>
-            <th>Eliminar</th>
+            <sec:authorize access='hasAuthority("admin")' >
+                <th>Eliminar</th>
+            </sec:authorize>
         </tr>
         </thead>
         <tbody>
@@ -43,12 +46,14 @@
                     </c:forEach>
                 </td>
                 <td>
-                    <spring:url value="/owners/delete/{ownerId}" var="deleteUrl">
-                        <spring:param name="ownerId" value="${owner.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(deleteUrl)}"> 
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
+                    <sec:authorize access='hasAuthority("admin")' >
+                        <spring:url value="/owners/delete/{ownerId}" var="deleteUrl">
+                            <spring:param name="ownerId" value="${owner.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(deleteUrl)}"> 
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a> 
+                    </sec:authorize>
                 </td>
                 
       

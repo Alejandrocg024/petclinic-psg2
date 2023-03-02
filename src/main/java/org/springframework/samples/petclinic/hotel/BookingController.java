@@ -72,8 +72,13 @@ public class BookingController {
         mav.addObject("bookings", bookingService.findBookingsByOwner(ownerId));
         mav.addObject("owner", ownerService.findOwnerById(ownerId));
         User user = userService.findUser(principal.getName()).get();
-		Integer owner = ownerService.findOwnerByUserName(user.getUsername()).getId();
-		Boolean EsUserLogeado = owner.equals(ownerId);
+        Boolean EsUserLogeado;
+        if(user.getUsername().equals("admin1")){
+            EsUserLogeado = true;
+        } else {
+            Integer owner = ownerService.findOwnerByUserName(user.getUsername()).getId();
+            EsUserLogeado = owner.equals(ownerId);
+        }
 		mav.addObject("esUserLogeado", EsUserLogeado);
         return mav;
     }
