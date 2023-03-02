@@ -51,24 +51,17 @@ public class VetController {
 
 	private final VetService vetService;
 
-	private final SpecialtyService specialtyService;
-
 	@Autowired
-	public VetController(VetService clinicService, SpecialtyService specialtyService) {
+	public VetController(VetService clinicService) {
 		this.vetService = clinicService;
-		this.specialtyService = specialtyService;
 	}
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
 
 	@GetMapping(value = "/vets/new")
 	public ModelAndView initCreationForm() {
 		ModelAndView mav = new ModelAndView(VIEWS_VET_CREATE_OR_UPDATE_FORM);
 		Vet vet = new Vet();
-		List<Specialty> specialties = specialtyService.findSpecialties().stream().collect(Collectors.toList());
+		List<Specialty> specialties = this.vetService.findSpecialties();
 		mav.addObject("specialties1",specialties);
 		mav.addObject("vet", vet);
 		return mav;
@@ -132,7 +125,7 @@ public class VetController {
 	public ModelAndView initUpdateVetForm(@PathVariable("vetId") int vetId) {
 		ModelAndView mav = new ModelAndView(VIEWS_VET_CREATE_OR_UPDATE_FORM);
 		Vet vet = this.vetService.findVetById(vetId);
-		List<Specialty> specialties = specialtyService.findSpecialties().stream().collect(Collectors.toList());
+		List<Specialty> specialties = this.vetService.findSpecialties();
 		mav.addObject("specialties1",specialties);
 		mav.addObject("vet",vet);
 		return mav;
