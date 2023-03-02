@@ -60,7 +60,7 @@
                         <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
                         <dt>Tipo</dt>
                         <dd><c:out value="${pet.type.name}"/></dd>
-                        <c:if test = "${esUserLogeado == true}">
+                        <c:if test = "${owner.user.username == nombreUsuario}">
                             <dt>Borrar mascota</dt>
                         </c:if>
                         <dd>
@@ -68,7 +68,7 @@
                                 <spring:param name="ownerId" value="${owner.id}"/>
                                 <spring:param name="petId" value="${pet.id}"/>
                             </spring:url>
-                            <c:if test = "${esUserLogeado == true}">
+                            <c:if test = "${owner.user.username == nombreUsuario}">
                                 <a href="${fn:escapeXml(deleteUrl)}"> 
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
@@ -105,7 +105,7 @@
                                         <spring:param name="petId" value="${pet.id}"/>
                                         <spring:param name="visitId" value="${visit.id}"/>
                                     </spring:url>
-                                    <c:if test = "${esUserLogeado == true}">
+                                    <c:if test = "${owner.user.username == nombreUsuario}">
                                         <a href="${fn:escapeXml(deleteVisit)}">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </a> 
