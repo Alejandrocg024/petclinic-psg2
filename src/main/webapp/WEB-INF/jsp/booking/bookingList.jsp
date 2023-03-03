@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="bookings">
 
-    <h2>Informacion de los due&#241;os</h2>
+    <h2>Informacion De Los Propietarios</h2>
 
 
     <table class="table table-striped">

@@ -42,9 +42,11 @@
                 </td>
                 <sec:authorize access="hasAnyRole('admin', 'veterinarian')" > 
                     <td> 
-                        <a href="/vets/delete/${vet.id}"> 
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </a>      
+                        <sec:authorize access='hasAuthority("admin")' >
+                            <a href="/vets/delete/${vet.id}"> 
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>  
+                        </sec:authorize>
                     </td>
                 </sec:authorize>
             </tr>
@@ -57,7 +59,7 @@
             
     <sec:authorize access="hasAuthority('admin')">
     <spring:url value="/vets/new" var="newUrl"></spring:url>
-	<a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Add Vet</a>
+	<a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Agregar Veterinario</a>
 	</sec:authorize>
 
 </petclinic:layout>
