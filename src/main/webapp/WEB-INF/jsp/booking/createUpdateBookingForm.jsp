@@ -36,6 +36,10 @@
                                 <option value="${pet.id}">${pet.name}</option>
                             </c:forEach>
                         </select>
+                        <c:if test="${error != null}">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span style="color: red;">${error}</span>
+                        </c:if>
                     </div>
                 </div>
                 <petclinic:inputField label="Fecha de Inicio" name="startDate"/>

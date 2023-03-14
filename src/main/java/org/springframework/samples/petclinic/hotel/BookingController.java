@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.hotel;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 import javax.validation.Valid;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.hotel.exceptions.DuplicatedPetInHotelException;
 import org.springframework.samples.petclinic.user.User;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
@@ -56,15 +58,31 @@ public class BookingController {
         res.addObject("pets", petService.findPetsByOwner(ownerId));
         if (result.hasErrors()) {
 			return res;
-		} else if(booking.getStartDate().isAfter(booking.getEndDate()) || booking.getStartDate().isEqual(booking.getEndDate())){
-            res.addObject("Mensaje", "La fecha de fin debe ser posterior a la fecha inicial");
-            return res;
         } else {
-            booking.setOwner(owner);
-			this.bookingService.save(booking);
-			return new ModelAndView("redirect:/booking/{ownerId}");
+            try{
+                booking.setOwner(owner);
+			    this.bookingService.save(booking);
+            }catch(DuplicatedPetInHotelException ex){
+                String message = dateErrorMessage(booking);
+                res.addObject("error", message);
+                return res;
+            }
+            return new ModelAndView("redirect:/booking/{ownerId}");
 		}
 	}
+
+    private String dateErrorMessage(Booking booking){
+        String res = "";
+        if(booking.getStartDate().isAfter(booking.getEndDate()) || booking.getStartDate().isEqual(booking.getEndDate())){
+            res = "La fecha de fin debe ser posterior a la fecha inicial";
+        } else if(booking.getStartDate().isBefore(LocalDate.now())){
+            res = "La fecha de inicio no debe ser posterior a la fecha actual";
+        } else{
+            res = "La mascota ya tiene una reserva en esa fecha";
+        }
+        return res;
+    }
+    
     
     @GetMapping("/{ownerId}")
     public ModelAndView showBookingList(@PathVariable("ownerId") Integer ownerId, Principal principal) {
