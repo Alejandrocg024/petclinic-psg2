@@ -36,10 +36,6 @@
                                 <option value="${pet.id}">${pet.name}</option>
                             </c:forEach>
                         </select>
-                        <c:if test="${error != null}">
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                            <span style="color: red;">${error}</span>
-                        </c:if>
                     </div>
                 </div>
                 <petclinic:inputField label="Fecha de Inicio" name="startDate"/>
@@ -48,7 +44,7 @@
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
                         <div style="color: red;">
-                            <c:out value ="${Mensaje}"/>
+                            <c:out value ="${error}"/>
                         </div>
                     </div>
                 </div>
