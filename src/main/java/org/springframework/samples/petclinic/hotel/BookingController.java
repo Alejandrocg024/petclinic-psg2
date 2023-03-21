@@ -76,7 +76,7 @@ public class BookingController {
         if(booking.getStartDate().isAfter(booking.getEndDate()) || booking.getStartDate().isEqual(booking.getEndDate())){
             res = "La fecha de fin debe ser posterior a la fecha inicial";
         } else if(booking.getStartDate().isBefore(LocalDate.now())){
-            res = "La fecha de inicio no debe ser posterior a la fecha actual";
+            res = "La fecha de inicio debe ser posterior a la fecha actual";
         } else{
             res = "La mascota ya tiene una reserva en esa fecha";
         }
