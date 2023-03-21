@@ -37,6 +37,7 @@ public class Adoption extends BaseEntity{
     @NotNull
     private Owner owner;
 
+    private Boolean status;
 
     
 }
