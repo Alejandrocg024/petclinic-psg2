@@ -27,5 +27,11 @@ public class CauseService {
 	public List<Cause> getCauses(){
 		return causeRepository.findAll();
 	}
+
+	@Transactional(readOnly = true)
+	public Double getSumDonationsCause(Integer id){
+		return causeRepository.sumDonationsCause(id);
+	}
+
 	
 }
