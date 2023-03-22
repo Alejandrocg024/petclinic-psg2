@@ -14,8 +14,5 @@ public interface CauseRepository extends CrudRepository<Cause, Integer> {
 	
 	List<Cause> findAll();
 
-	@Query("SUM(d.amount) FROM Donation d WHERE d.cause.id ?=1 ")
-	Double sumDonationsCause(Integer id);
-	
 	
 }
