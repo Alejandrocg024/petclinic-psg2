@@ -105,7 +105,7 @@
                                         <spring:param name="petId" value="${pet.id}"/>
                                     </spring:url>
                                     <button>
-                                        <a href="${fn:escapeXml(petInAdoption)}">Solicitar su adopcion</a>
+                                        <a href="${fn:escapeXml(petInAdoption)}">Incluirla en la lista de adopciones</a>
                                     </button>
                                 </c:if>
                             </dd>
@@ -167,6 +167,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Mascota</th>
             <th>Solicitante</th>
             <th>Fecha de solicitud</th>
             <th>Descripci&#243;n</th>
@@ -176,6 +177,9 @@
         <tbody>
                 <c:forEach items="${adoptions}" var="adoption">
                     <tr>
+                        <td>
+                            <c:out value="${adoption.pet.name}" />
+                        </td>
                         <td>
                             <c:out value="${adoption.owner.firstName} ${adoption.owner.lastName}" />
                         </td>

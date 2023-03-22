@@ -112,6 +112,7 @@ public class AdoptionController {
 		this.adoptionService.save(adoptionToUpdate); 
 		Pet petToUpdate = adoptionToUpdate.getPet();
 		petToUpdate.setOwner(adoptionToUpdate.getOwner());
+		petToUpdate.setInAdoption(false);
 		this.petService.savePet(petToUpdate);
 		return new ModelAndView("redirect:/owners/{ownerId}");
 	}
