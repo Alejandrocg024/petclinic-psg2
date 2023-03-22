@@ -44,7 +44,7 @@
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
                         <div style="color: red;">
-                            <c:out value ="${Mensaje}"/>
+                            <c:out value ="${error}"/>
                         </div>
                     </div>
                 </div>
