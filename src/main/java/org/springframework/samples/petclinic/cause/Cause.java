@@ -27,7 +27,7 @@ public class Cause extends BaseEntity {
 	private String description;
 	
 	@NotEmpty
-	@Column(name = "cause_budgetTarget")
+	@Column(name = "cause_target")
 	private Double budgetTarget;
 	
 	@NotEmpty
@@ -38,5 +38,6 @@ public class Cause extends BaseEntity {
 	mayor o igual al target, este booleano pasará a false para que ya no se puedan hacer 
 	mas donaciones */
 	@NotNull
+	@Column(name = "cause_active")
 	private boolean active;
 }

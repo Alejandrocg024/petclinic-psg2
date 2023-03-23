@@ -10,14 +10,15 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/causes")
 public class CauseController {
     private static final String VIEWS_DONATION_CREATE_OR_UPDATE_FORM = "cause/createForm";
 
@@ -29,7 +30,7 @@ public class CauseController {
 		this.causeService = causeService;
     }
 
-    @GetMapping(value = "/causes")
+    @GetMapping(value = "/findCauses")
 	public ModelAndView listCauses(Cause cause, BindingResult result) {
         ModelAndView mav = new ModelAndView("causes/findCauses");
         List<Cause> causas = causeService.getCauses();
@@ -43,7 +44,7 @@ public class CauseController {
         return mav;
 	}
 
-    @GetMapping("/causes/{causeId}")
+    @GetMapping("/{causeId}")
 	public ModelAndView showCause(@PathVariable("causeId") int causeId, Principal principal) {
 		ModelAndView mav = new ModelAndView("causes/causeDetails");
         List<Donation> donaciones = causeService.getDonationsCauseById(causeId);
@@ -52,7 +53,7 @@ public class CauseController {
 		mav.addObject("donaciones", donaciones);
 		return mav;
 	}
-    @GetMapping(value = "/causes/{causeId}/donation/new")
+    @GetMapping(value = "/{causeId}/donation/new")
 	public ModelAndView initCreationForm(@PathVariable("causeId") int causeId) {
         ModelAndView mav = new ModelAndView(VIEWS_DONATION_CREATE_OR_UPDATE_FORM);
 		Cause causa = new Cause();
@@ -60,7 +61,7 @@ public class CauseController {
 		return mav;
     }
 
-    @PostMapping(value = "/causes/{causeId}/donation/new")
+    @PostMapping(value = "/{causeId}/donation/new")
 	public String processCreationForm(@Valid Donation donacion, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_DONATION_CREATE_OR_UPDATE_FORM;

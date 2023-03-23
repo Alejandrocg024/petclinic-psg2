@@ -15,8 +15,9 @@ public class CauseService {
 	private DonationRepository donationRepository;
 	
 	@Autowired
-	public CauseService(CauseRepository causeRepository) {
+	public CauseService(CauseRepository causeRepository, DonationRepository donationRepository) {
 		this.causeRepository = causeRepository;
+		this.donationRepository = donationRepository;
 	}
 
 	@Transactional(readOnly = true)
