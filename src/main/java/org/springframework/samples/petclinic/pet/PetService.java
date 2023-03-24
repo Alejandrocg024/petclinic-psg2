@@ -102,4 +102,9 @@ public class PetService {
         return this.petRepository.findPetsByOwner(id);
     }
 
+	@Transactional(readOnly = true)
+   	public List<Pet> findPetsInAdoption(){
+        return this.petRepository.findPetsInAdoption();
+    }
+
 }

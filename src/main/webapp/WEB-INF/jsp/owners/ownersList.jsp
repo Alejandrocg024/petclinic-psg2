@@ -17,9 +17,11 @@
             <th>Ciudad</th>
             <th style="width: 120px">Telefono</th>
             <th>Mascota</th>
-            <sec:authorize access='hasAuthority("admin")' >
-                <th>Eliminar</th>
-            </sec:authorize>
+            <th>
+                <sec:authorize access='hasAuthority("admin")' >
+                    <span>Eliminar</span>
+                </sec:authorize>
+            </th>
         </tr>
         </thead>
         <tbody>
