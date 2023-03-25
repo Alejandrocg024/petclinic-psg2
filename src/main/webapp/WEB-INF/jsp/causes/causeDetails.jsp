@@ -43,7 +43,5 @@
             </tr>
         </c:forEach>
     </table>
-    <spring:url value="/causes/${causeId}/donation/new" var="newUrl"></spring:url>
-	    <a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Donar a esta causa</a>
         </tbody>
 </petclinic:layout>

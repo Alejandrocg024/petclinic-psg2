@@ -74,8 +74,7 @@ public class CauseController {
     }
 
 	@PostMapping(value = "/new")
-	public ModelAndView processCreationFormCause(@Valid Cause cause, BindingResult result, String name,
-			String description, String budgetTarget, String organization, String active) {
+	public ModelAndView processCreationFormCause(@Valid Cause cause, BindingResult result, String active) {
 		ModelAndView mav = new ModelAndView(VIEWS_CAUSES_CREATE_OR_UPDATE_FORM);
 		List<Boolean> ls = Arrays.asList(true, false);
 		mav.addObject("lista", ls);
@@ -85,10 +84,6 @@ public class CauseController {
 			System.out.println(result.getAllErrors());
 			return mav;
 		} else {
-			/* cause.setBudgetTarget(Double.valueOf(budgetTarget));
-			cause.setDescription(description);
-			cause.setName(name);
-			cause.setOrganization(organization); */
 			cause.setActive(Boolean.valueOf(active));
 			causeService.saveCause(cause);
 			return new ModelAndView("redirect:/causes");
@@ -109,6 +104,8 @@ public class CauseController {
 		donation.setOwner(ownerService.findOwnerByUserName(principal.getName()));
 		donation.setAmount(Double.valueOf(amount));
 		donation.setCause(causeService.getCauseById(causeId));
+		List<Cause> causas = causeService.getCauses();
+		mav.addObject("causas", causas);
 		mav.addObject("amount", donation.getAmount());
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());

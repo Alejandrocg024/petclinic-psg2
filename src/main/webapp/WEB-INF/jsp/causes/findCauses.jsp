@@ -18,6 +18,8 @@
 
                 <th>Objetivo</th>
 
+                <th>Donar</th>
+
             </tr>
         </thead>
         <tbody>
@@ -35,6 +37,10 @@
                         <td>
                             <c:out value="${causeMap.cause.budgetTarget}" />
                         </td>
+                        <td>
+                            <a href="/causes/${causeMap.cause.id}/donation/new" class="btn btn-default">Donar</a>
+                        </td>
+
                     </tr>
                 </c:if>
             </c:forEach>
