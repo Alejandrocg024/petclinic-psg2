@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.cause;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/causes")
 public class CauseController {
     private static final String VIEWS_DONATION_CREATE_OR_UPDATE_FORM = "causes/createForm";
+	private static final String VIEWS_CAUSES_CREATE_OR_UPDATE_FORM = "causes/newCause";
 
     @Autowired
 	private CauseService causeService;
@@ -42,6 +44,9 @@ public class CauseController {
 		List<CauseDonation> causeD = new ArrayList<CauseDonation>();
         for(Cause causa: causas){
             Double donacionesTotal = causeService.getSumDonationsCause(causa.getId());
+			if(donacionesTotal==null){
+				donacionesTotal = 0.0;
+			}
             CauseDonation causaDonation = new CauseDonation(causa, donacionesTotal);
 			causeD.add(causaDonation);
 		}
@@ -58,6 +63,38 @@ public class CauseController {
 		mav.addObject("donaciones", donaciones);
 		return mav;
 	}
+	@GetMapping(value = "/new")
+	public ModelAndView initCreationFormCause() {
+        ModelAndView mav = new ModelAndView(VIEWS_CAUSES_CREATE_OR_UPDATE_FORM);
+		Cause causa = new Cause();
+		List<Boolean> ls = Arrays.asList(true, false);
+		mav.addObject("lista", ls);
+		mav.addObject("cause", causa);
+		return mav;
+    }
+
+	@PostMapping(value = "/new")
+	public ModelAndView processCreationFormCause(@Valid Cause cause, BindingResult result, String name,
+			String description, String budgetTarget, String organization, String active) {
+		ModelAndView mav = new ModelAndView(VIEWS_CAUSES_CREATE_OR_UPDATE_FORM);
+		List<Boolean> ls = Arrays.asList(true, false);
+		mav.addObject("lista", ls);
+		
+		if (result.hasErrors()) {
+			mav.addObject("cause", cause);
+			System.out.println(result.getAllErrors());
+			return mav;
+		} else {
+			/* cause.setBudgetTarget(Double.valueOf(budgetTarget));
+			cause.setDescription(description);
+			cause.setName(name);
+			cause.setOrganization(organization); */
+			cause.setActive(Boolean.valueOf(active));
+			causeService.saveCause(cause);
+			return new ModelAndView("redirect:/causes");
+		}
+	}
+
     @GetMapping(value = "/{causeId}/donation/new")
 	public ModelAndView initCreationForm(@PathVariable("causeId") int causeId) {
         ModelAndView mav = new ModelAndView(VIEWS_DONATION_CREATE_OR_UPDATE_FORM);
@@ -93,7 +130,11 @@ public class CauseController {
 
 	private String donationErrorMessage(Donation donation){
         String res = "";
-        if(causeService.getSumDonationsCause(donation.getCause().getId()) + donation.getAmount() > donation.getCause().getBudgetTarget()){
+		Double doub = causeService.getSumDonationsCause(donation.getCause().getId());
+		if(doub ==null){
+			doub = 0.0;
+		}
+        if(doub + donation.getAmount() > donation.getCause().getBudgetTarget()){
             res = "Con esta donación estarías superando el objetivo";
 			donation.getCause().setActive(false);
         } else if(donation.getCause().getActive()==false){

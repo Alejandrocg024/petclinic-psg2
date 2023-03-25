@@ -32,7 +32,11 @@ public class CauseService {
 	}
 	@Transactional
 	public void saveDonation(Donation d) throws DataAccessException, ReachedBudgetTargetException{
-		if(donationRepository.sumDonationsCause(d.getCause().getId()) + d.getAmount()> d.getCause().getBudgetTarget()){
+		Double doub = donationRepository.sumDonationsCause(d.getCause().getId());
+		if(doub == null){
+			doub = 0.0;
+		}
+		if(doub + d.getAmount()> d.getCause().getBudgetTarget()){
             throw new ReachedBudgetTargetException();
         } else if(d.getCause().getActive()==false){
             throw new ReachedBudgetTargetException();

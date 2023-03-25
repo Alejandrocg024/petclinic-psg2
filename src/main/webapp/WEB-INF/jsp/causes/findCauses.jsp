@@ -11,33 +11,35 @@
 <petclinic:layout pageName="findCauses">
     <table id="causesTable" class="table table-striped">
         <thead>
-        <tr>
-            <th>Nombre</th>
+            <tr>
+                <th>Nombre</th>
 
-            <th>Recaudado</th>
+                <th>Recaudado</th>
 
-            <th>Objetivo</th>
+                <th>Objetivo</th>
 
-        </tr>
+            </tr>
         </thead>
         <tbody>
-        <c:forEach items="${causaDonation}" var="causeMap">
-            <c:if test="${causeMap.cause.budgetTarget != causeMap.amount}">
-                <tr>
-                    <td>
-                        <a href="/causes/${causeMap.cause.id}"> 
-                            <c:out value="${causeMap.cause.name}"/>
-                        </a>   
-                    </td>
-                    <td>
-                        <c:out value="${causeMap.amount}"/>
-                    </td>
-                    <td> 
-                        <c:out value="${causeMap.cause.budgetTarget}"/>   
-                    </td>
-                </tr>
-            </c:if>
-        </c:forEach>
-        </tbody>
+            <c:forEach items="${causaDonation}" var="causeMap">
+                <c:if test="${causeMap.cause.budgetTarget != causeMap.amount}">
+                    <tr>
+                        <td>
+                            <a href="/causes/${causeMap.cause.id}">
+                                <c:out value="${causeMap.cause.name}" />
+                            </a>
+                        </td>
+                        <td>
+                            <c:out value="${causeMap.amount}" />
+                        </td>
+                        <td>
+                            <c:out value="${causeMap.cause.budgetTarget}" />
+                        </td>
+                    </tr>
+                </c:if>
+            </c:forEach>
     </table>
+    <spring:url value="/causes/new" var="newUrl"></spring:url>
+    <a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Crear una causa</a>
+    </tbody>
 </petclinic:layout>

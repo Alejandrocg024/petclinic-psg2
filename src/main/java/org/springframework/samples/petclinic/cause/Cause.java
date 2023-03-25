@@ -26,7 +26,7 @@ public class Cause extends BaseEntity {
 	@Column(name = "cause_description")
 	private String description;
 	
-	@NotEmpty
+	@NotNull
 	@Column(name = "cause_target")
 	private Double budgetTarget;
 	
