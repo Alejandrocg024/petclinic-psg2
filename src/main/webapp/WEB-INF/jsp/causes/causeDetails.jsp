@@ -5,13 +5,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <petclinic:layout pageName="causeDetails">
     <h2>Causa</h2>
 
     <p>Nombre: <c:out value="${cause.name}"/></p>
     <p>Descripción: <c:out value="${cause.description}"/></p>
-    <p>Objetivo: <c:out value="${cause.targetBudget}"/></p>
+    <p>Objetivo: <c:out value="${cause.budgetTarget}"/></p>
     <p>Organización: <c:out value="${cause.organization}"/></p>
 
     <h2>Donaciones</h2>
@@ -24,23 +25,25 @@
             <th>Cantidad</th>
 
             <th>Fecha</th>
+
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${donationList}" var="donation">
+        <c:forEach items="${donaciones}" var="donation">
             <tr>
                 <td>
-                    <c:out value="${donation.user.username}"/> 
+                    <c:out value="${donation.owner.user.username}"/> 
                 </td>
                 <td>
                     <c:out value="${donation.amount} "/>
                 </td>
-                <td> 
-                    <c:out value="${donation.donationDate}"/>   
+                <td>
+                    <c:out value="${donation.donationDate} "/>
                 </td>
-
             </tr>
         </c:forEach>
-        </tbody>
     </table>
+    <spring:url value="/causes/${causeId}/donation/new" var="newUrl"></spring:url>
+	    <a href="${fn:escapeXml(newUrl)}" class="btn btn-default">Donar a esta causa</a>
+        </tbody>
 </petclinic:layout>

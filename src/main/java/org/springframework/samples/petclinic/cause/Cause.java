@@ -39,5 +39,5 @@ public class Cause extends BaseEntity {
 	mas donaciones */
 	@NotNull
 	@Column(name = "cause_active")
-	private boolean active;
+	private Boolean active;
 }

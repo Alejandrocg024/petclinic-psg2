@@ -85,6 +85,7 @@ INSERT INTO causes(id,cause_name,cause_description,cause_target,cause_organizati
 INSERT INTO causes(id,cause_name,cause_description,cause_target,cause_organization,cause_active) VALUES (2, 'Federer', 'hijklmn',123.00,'sfsafsafsafs', TRUE);
 INSERT INTO causes(id,cause_name,cause_description,cause_target,cause_organization,cause_active) VALUES (3, 'Mou', 'opqrstuvwxyz',233232.50,'hgrtrhtbdsas', TRUE);
 
-INSERT INTO donations(id,amount,cause_id) VALUES (1,50.0,2);
-INSERT INTO donations(id,amount,cause_id) VALUES (2,12.0,1);
-INSERT INTO donations(id,amount,cause_id) VALUES (3,500.20,3);
+INSERT INTO donations(id,amount,cause_id, donation_date, owner_id) VALUES (1,50.0,2, '2023-01-04', 1);
+INSERT INTO donations(id,amount,cause_id, donation_date, owner_id) VALUES (2,12.0,1, '2022-06-15',1);
+INSERT INTO donations(id,amount,cause_id, donation_date, owner_id) VALUES (3,500.20,3, '2023-03-24', 3);
+INSERT INTO donations(id,amount,cause_id, donation_date, owner_id) VALUES (4,50.0,2,'2020-01-28', 5);
