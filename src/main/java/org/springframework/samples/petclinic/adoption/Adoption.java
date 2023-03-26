@@ -1,10 +1,11 @@
-package org.springframework.samples.petclinic.adoptation;
+package org.springframework.samples.petclinic.adoption;
 
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +22,7 @@ import lombok.Setter;
 @Entity
 public class Adoption extends BaseEntity{
 
+    @Column(length = 500)
     @NotNull
     private String description;
 
@@ -28,16 +30,14 @@ public class Adoption extends BaseEntity{
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate posting_date;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "pet_id")
     @NotNull
     private Pet pet;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @NotNull
     private Owner owner;
 
     private Boolean status;
-
-    
 }

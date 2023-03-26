@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.adoption.AdoptionService;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.User;
 import org.springframework.samples.petclinic.user.UserService;
@@ -48,14 +49,12 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	private final AdoptionService adoptionService;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, AdoptionService adoptionService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
-		this.userService = userService;
+		this.adoptionService = adoptionService;
 	}
 
 	@InitBinder
@@ -151,8 +150,10 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Principal principal) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
+		Owner owner = this.ownerService.findOwnerById(ownerId);
 		mav.addObject("nombreUsuario", principal.getName());
-		mav.addObject("owner", this.ownerService.findOwnerById(ownerId));
+		mav.addObject("owner", owner);
+		mav.addObject("adoptions", this.adoptionService.findAdoptionsByPets(owner.getPets()));
 		return mav;
 	}
 

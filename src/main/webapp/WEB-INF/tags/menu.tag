@@ -34,6 +34,12 @@
 					<span>Buscar propietario</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'adoptions'}" url="/adoptions"
+					title="find adoptions">
+					<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+					<span>Adopciones</span>
+				</petclinic:menuItem>
+
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
