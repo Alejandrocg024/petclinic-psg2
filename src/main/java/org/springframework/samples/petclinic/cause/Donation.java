@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,18 +27,26 @@ public class Donation extends BaseEntity{
     @Column(name = "amount")
     private Double amount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cause_id")
-	private Cause cause;
+    @Column(name = "donation_date")        
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	private LocalDate date;
 
-
-    @Column(name= "donation_date")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private LocalDate donationDate;
-
-
+	@NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+	@NotNull
+    @ManyToOne
+	@JoinColumn(name = "cause_id")
+	private Cause cause;
+	
+
+
+	/**
+	 * Creates a new instance of Donation for the current date
+	 */
+	public Donation() {
+		this.date = LocalDate.now();
+	}
 }

@@ -52,5 +52,6 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
 	@Query("select s from Specialty s where s.id = :id")
 	Specialty findSpecialtyById(@Param("id") Integer id);
 
-	
+
+
 }

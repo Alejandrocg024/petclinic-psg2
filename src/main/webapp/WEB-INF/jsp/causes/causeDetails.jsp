@@ -8,40 +8,61 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <petclinic:layout pageName="causeDetails">
-    <h2>Causa</h2>
 
-    <p>Nombre: <c:out value="${cause.name}"/></p>
-    <p>Descripción: <c:out value="${cause.description}"/></p>
-    <p>Objetivo: <c:out value="${cause.budgetTarget}"/></p>
-    <p>Organización: <c:out value="${cause.organization}"/></p>
+    <h2>Detalles de la causa</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Nombre</th>
+            <td><b><c:out value="${cause.name}"/></b></td>
+        </tr>
+        <tr>
+            <th>Descripcion</th>
+            <td><c:out value="${cause.description}"/></td>
+        </tr>
+        <tr>
+            <th>Presupuesto</th>
+            <td><c:out value="${cause.amountDonated}"/> &euro;/
+                <c:out value="${cause.budgetTarget}"/> &euro;
+            </td> 
+        </tr>
+        <tr>
+            <th>Organizacion</th>
+            <td><c:out value="${cause.organization}"/></td>
+        </tr>
+    </table>
 
-    <h2>Donaciones</h2>
+    <c:if test="${cause.active == true}">
+        <a href="/causes/${cause.id}/donation/new" class="btn btn-default">Donar</a>
+    </c:if>
 
-    <table id="donationsTable" class="table table-striped">
+    <br/>
+    <br/>
+    <br/>
+    <h2>Donaciones a la causa</h2>
+
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Cliente</th>
-
             <th>Cantidad</th>
-
-            <th>Fecha</th>
-
+            <th>Fecha de donacion</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${donaciones}" var="donation">
-            <tr>
-                <td>
-                    <c:out value="${donation.owner.user.username}"/> 
-                </td>
-                <td>
-                    <c:out value="${donation.amount} "/>
-                </td>
-                <td>
-                    <c:out value="${donation.donationDate} "/>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+                <c:forEach items="${donations}" var="donation">
+                    <tr>
+                        <td>
+                            <c:out value="${donation.owner.user.username}"/> 
+                        </td>
+                        <td>
+                            <c:out value="${donation.amount} "/>
+                        </td>
+                        <td>
+                            <c:out value="${donation.date} "/>
+                        </td>
+                    </tr>
+                </c:forEach>
         </tbody>
+    </table>
+
 </petclinic:layout>

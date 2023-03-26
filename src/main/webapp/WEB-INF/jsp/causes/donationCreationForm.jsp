@@ -9,6 +9,28 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="donationForm">
+    <h2>Detalles de la causa</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Nombre</th>
+            <td><b><c:out value="${cause.name}"/></b></td>
+        </tr>
+        <tr>
+            <th>Descripcion</th>
+            <td><c:out value="${cause.description}"/></td>
+        </tr>
+        <tr>
+            <th>Presupuesto</th>
+            <td><c:out value="${cause.amountDonated}"/> &euro;/
+                <c:out value="${cause.budgetTarget}"/> &euro;
+            </td> 
+        </tr>
+        <tr>
+            <th>Organizacion</th>
+            <td><c:out value="${cause.organization}"/></td>
+        </tr>
+    </table>
+
     <h2>Donar a la causa</h2>
     <form:form modelAttribute="donation" class="form-horizontal" id="add-donation-form">
         <div class="form-group has-feedback">

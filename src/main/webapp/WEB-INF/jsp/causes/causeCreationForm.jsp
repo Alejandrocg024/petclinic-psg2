@@ -12,22 +12,11 @@
     <h2>Crear una Causa Nueva</h2>
     <form:form modelAttribute="cause" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre" name="name"/>
+            <petclinic:inputField label="Nombre de la causa" name="name"/>
             <petclinic:inputField label="Descripción" name="description"/>
-            <petclinic:inputField label="Objetivo" name="budgetTarget"/>
+            <petclinic:inputField label="Presupuesto objetivo" name="budgetTarget"/>
             <petclinic:inputField label="Organización" name="organization"/>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Activo</label>
-                <div class="col-sm-10">
-                    <select class="form-control" id="active" name="active">
-                        <option value="">Selecciona un valor</option>
-                        <c:forEach var="a" items="${lista}">
-                            <option value="${a}">${a}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-
+            <input type="hidden" name="active" value="true"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

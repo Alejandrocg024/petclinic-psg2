@@ -42,8 +42,8 @@
 
 				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
 					title="causes">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Causes</span>
+					<span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+					<span>Causas</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"

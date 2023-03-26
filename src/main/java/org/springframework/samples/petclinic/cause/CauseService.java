@@ -30,19 +30,6 @@ public class CauseService {
 	public void saveCause(Cause c) throws DataAccessException{
 		causeRepository.save(c);
 	}
-	@Transactional
-	public void saveDonation(Donation d) throws DataAccessException, ReachedBudgetTargetException{
-		Double doub = donationRepository.sumDonationsCause(d.getCause().getId());
-		if(doub == null){
-			doub = 0.0;
-		}
-		if(doub + d.getAmount()> d.getCause().getBudgetTarget()){
-            throw new ReachedBudgetTargetException();
-        } else if(d.getCause().getActive()==false){
-            throw new ReachedBudgetTargetException();
-		}
-		donationRepository.save(d);
-	}
 	
 	@Transactional(readOnly = true)
 	public List<Cause> getCauses(){
@@ -53,12 +40,16 @@ public class CauseService {
 	public Double getSumDonationsCause(Integer id){
 		return donationRepository.sumDonationsCause(id);
 	}
-	@Transactional(readOnly = true)
-	public List<Donation> getDonationsCauseById(Integer id){
-		return donationRepository.donationsCauseById(id);
+
+	@Transactional
+	public void saveDonation(Donation d) throws DataAccessException, ReachedBudgetTargetException{
+		Double doub = donationRepository.sumDonationsCause(d.getCause().getId());
+		if(doub == null){
+			doub = 0.0;
+		}
+		if(doub + d.getAmount()> d.getCause().getBudgetTarget()){
+            throw new ReachedBudgetTargetException();
+        }
+		donationRepository.save(d);
 	}
-
-	
-
-	
 }
