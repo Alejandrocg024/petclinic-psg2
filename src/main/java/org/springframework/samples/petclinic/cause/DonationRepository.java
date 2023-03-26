@@ -7,12 +7,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CauseRepository extends CrudRepository<Cause, Integer> {
+public interface DonationRepository extends CrudRepository<Donation, Integer> {
 
-	@Query("SELECT c FROM Cause c WHERE c.id=?1")
-	Cause findCauseById(Integer id);
-	
-	List<Cause> findAll();
+    @Query("SELECT SUM(d.amount) FROM Donation d WHERE d.cause.id =?1 ")
+	Double sumDonationsCause(Integer id);
 
-	
+    List<Donation> findAll();
+    
 }

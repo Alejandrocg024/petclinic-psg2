@@ -106,5 +106,4 @@ public class PetService {
    	public List<Pet> findPetsInAdoption(){
         return this.petRepository.findPetsInAdoption();
     }
-
 }
