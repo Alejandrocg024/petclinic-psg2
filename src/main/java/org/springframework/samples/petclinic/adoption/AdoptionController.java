@@ -58,7 +58,7 @@ public class AdoptionController {
 
 	@GetMapping()
 	public ModelAndView showAdopciones(Principal principal) {
-		ModelAndView result = new ModelAndView(ADOPTIONS_LISTING);
+		var result = new ModelAndView(ADOPTIONS_LISTING);
 		result.addObject("nombreUsuario", principal.getName());
 		result.addObject("petsInAdoption", petService.findPetsInAdoption());
 		return result;
@@ -66,8 +66,8 @@ public class AdoptionController {
 	
 	@GetMapping(value = "/{petId}/new")
 	public ModelAndView initCreationForm(@PathVariable("petId") Integer petId, Principal principal) {
-		ModelAndView mav = new ModelAndView(ADOPTIONS_CREATE_FORM);
-		Adoption adoption = new Adoption();
+		var mav = new ModelAndView(ADOPTIONS_CREATE_FORM);
+		var adoption = new Adoption();
 		adoption.setPet(petService.findPetById(petId));
 		adoption.setOwner(ownerService.findOwnerByUserName(principal.getName()));
 		mav.addObject("adoption", adoption);
@@ -77,7 +77,7 @@ public class AdoptionController {
 
 	@PostMapping(value = "/{petId}/new")
 	public ModelAndView processCreationForm(Adoption adoption, BindingResult result, @PathVariable("petId") int petId, Principal principal) {
-		ModelAndView mav = new ModelAndView(ADOPTIONS_CREATE_FORM);
+		var mav = new ModelAndView(ADOPTIONS_CREATE_FORM);
 		adoption.setPet(petService.findPetById(petId));
 		adoption.setOwner(ownerService.findOwnerByUserName(principal.getName()));
 		mav.addObject("pet", petService.findPetById(petId));
@@ -87,7 +87,7 @@ public class AdoptionController {
             mav.addObject("Mensaje", "La descripcion debe ser menor de 500 caracteres");
             return mav;
         } else {
-			adoption.setPosting_date(LocalDate.now());
+			adoption.setPostingDate(LocalDate.now());
 			this.adoptionService.save(adoption);
 			return new ModelAndView("redirect:/adoptions");
 		}
@@ -95,10 +95,10 @@ public class AdoptionController {
 
 	@GetMapping(value = "/{ownerId}/accept/{adoptionId}")
 	public ModelAndView acceptAdoption(@PathVariable("adoptionId") Integer adoptionId, @PathVariable("ownerId") Integer ownerId) throws DataAccessException, DuplicatedPetNameException {
-		Adoption adoptionToUpdate=this.adoptionService.findAdoptionById(adoptionId);
+		var adoptionToUpdate=this.adoptionService.findAdoptionById(adoptionId);
 		adoptionToUpdate.setStatus(true);
 		this.adoptionService.save(adoptionToUpdate); 
-		Pet petToUpdate = adoptionToUpdate.getPet();
+		var petToUpdate = adoptionToUpdate.getPet();
 		petToUpdate.setOwner(adoptionToUpdate.getOwner());
 		petToUpdate.setInAdoption(false);
 		this.petService.savePet(petToUpdate);
@@ -107,7 +107,7 @@ public class AdoptionController {
 
 	@PostMapping(value = "/decline/{adoptionId}")
 	public ModelAndView declineAdoption(@PathVariable("adoptionId") Integer adoptionId) {
-		Adoption adoptionToUpdate=this.adoptionService.findAdoptionById(adoptionId);
+		var adoptionToUpdate=this.adoptionService.findAdoptionById(adoptionId);
 		adoptionToUpdate.setStatus(false);
 		this.adoptionService.save(adoptionToUpdate); 
 		return new ModelAndView("redirect:/owners/{ownerId}");
