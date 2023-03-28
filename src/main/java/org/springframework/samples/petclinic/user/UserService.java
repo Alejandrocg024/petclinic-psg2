@@ -33,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
-	private UserService userService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {

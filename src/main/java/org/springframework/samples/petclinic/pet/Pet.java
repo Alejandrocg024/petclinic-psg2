@@ -52,6 +52,8 @@ public class Pet extends NamedEntity {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
+	private boolean inAdoption;
+
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;
@@ -114,4 +116,11 @@ public class Pet extends NamedEntity {
 		visit.setPet(this);
     }
 
+	public boolean isInAdoption(){
+		return this.inAdoption;
+	}
+
+	public void setInAdoption(boolean inAdoption){
+		this.inAdoption = inAdoption;
+	}
 }

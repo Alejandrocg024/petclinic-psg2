@@ -16,12 +16,12 @@
 package org.springframework.samples.petclinic.pet;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
@@ -66,8 +66,25 @@ public class PetController {
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
 	}
+
+	@GetMapping("/pets/inAdoption/{petId}")
+	public ModelAndView inAdoptionPet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId) throws DataAccessException, DuplicatedPetNameException{
+		Pet petToUpdate=this.petService.findPetById(petId);
+		petToUpdate.setInAdoption(true);
+		this.petService.savePet(petToUpdate);  
+		return new ModelAndView("redirect:/owners/{ownerId}");
+	}
+
+	@GetMapping("/pets/notInAdoption/{petId}")
+	public ModelAndView notInAdoptionPet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId) throws DataAccessException, DuplicatedPetNameException{
+		Pet petToUpdate=this.petService.findPetById(petId);
+		petToUpdate.setInAdoption(false);
+		this.petService.savePet(petToUpdate);  
+		return new ModelAndView("redirect:/owners/{ownerId}");
+	}
+
 	@GetMapping("/pets/delete/{petId}")
-	public ModelAndView deletePet(@PathVariable("petId") Integer petId, @PathVariable("ownerId") int ownerId){
+	public ModelAndView deletePet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId){
 		Owner owner = ownerService.findOwnerById(ownerId);
 		Pet pet = petService.findPetById(petId);
 		owner.removePet(pet);
