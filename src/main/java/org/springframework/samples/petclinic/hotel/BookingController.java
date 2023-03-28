@@ -72,7 +72,7 @@ public class BookingController {
 	}
 
     private String dateErrorMessage(Booking booking){
-        String res = "";
+        var res = "";
         if(booking.getStartDate().isAfter(booking.getEndDate()) || booking.getStartDate().isEqual(booking.getEndDate())){
             res = "La fecha de fin debe ser posterior a la fecha inicial";
         } else if(booking.getStartDate().isBefore(LocalDate.now())){
