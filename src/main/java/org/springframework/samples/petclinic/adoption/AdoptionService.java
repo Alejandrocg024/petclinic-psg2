@@ -2,8 +2,6 @@ package org.springframework.samples.petclinic.adoption;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray.ReadOnly;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
