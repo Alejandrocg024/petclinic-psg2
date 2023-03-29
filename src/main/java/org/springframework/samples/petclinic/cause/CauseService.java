@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.cause.exceptions.ReachedBudgetTargetException;
+import org.springframework.samples.petclinic.cause.exceptions.DonationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,14 +42,17 @@ public class CauseService {
 	}
 
 	@Transactional
-	public void saveDonation(Donation d) throws DataAccessException, ReachedBudgetTargetException{
+	public void saveDonation(Donation d) throws DataAccessException, DonationException{
 		Double doub = donationRepository.sumDonationsCause(d.getCause().getId());
 		if(doub == null){
 			doub = 0.0;
 		}
 		if(doub + d.getAmount()> d.getCause().getBudgetTarget()){
-            throw new ReachedBudgetTargetException();
+            throw new DonationException();
         }
+		if(d.getAmount()<=0){
+			throw new DonationException();
+		}
 		donationRepository.save(d);
 	}
 }

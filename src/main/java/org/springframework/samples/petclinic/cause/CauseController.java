@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.cause.exceptions.ReachedBudgetTargetException;
+import org.springframework.samples.petclinic.cause.exceptions.DonationException;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
@@ -97,7 +97,7 @@ public class CauseController {
 					this.causeService.saveCause(cause);
 				}
 				this.causeService.saveDonation(donation);
-			}catch(ReachedBudgetTargetException ex){
+			}catch(DonationException ex){
 				String mensaje = donationErrorMessage(donation);
 				mav.addObject("error", mensaje);
 				return mav;
@@ -116,6 +116,11 @@ public class CauseController {
             res = "Con esta donación estarías superando el objetivo";
 			donation.getCause().setActive(false);
         }
+		if(donation.getAmount()<=0){
+			res = "El numero tiene que ser mayor que 0";
+		}
+		
+
 		return res;
 }
     
