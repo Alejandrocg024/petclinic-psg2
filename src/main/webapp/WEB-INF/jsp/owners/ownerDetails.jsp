@@ -184,7 +184,7 @@
                             <c:out value="${adoption.owner.firstName} ${adoption.owner.lastName}" />
                         </td>
                         <td>
-                            <c:out value="${adoption.posting_date}" />
+                            <c:out value="${adoption.postingDate}" />
                         </td>
                         <td>
                             <c:out value="${adoption.description}" />
