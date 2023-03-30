@@ -147,7 +147,7 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId, Principal principal) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-		Owner owner = this.ownerService.findOwnerById(ownerId);
+		var owner = this.ownerService.findOwnerById(ownerId);
 		mav.addObject("nombreUsuario", principal.getName());
 		mav.addObject("owner", owner);
 		mav.addObject("adoptions", this.adoptionService.findAdoptionsByPets(owner.getPets()));

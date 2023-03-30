@@ -13,26 +13,26 @@
     <table class="table table-striped">
         <tr>
             <th>Nombre</th>
-            <td><b><c:out value="${cause.name}"/></b></td>
+            <td><b><c:out value="${cause1.name}"/></b></td>
         </tr>
         <tr>
             <th>Descripcion</th>
-            <td><c:out value="${cause.description}"/></td>
+            <td><c:out value="${cause1.description}"/></td>
         </tr>
         <tr>
             <th>Presupuesto</th>
-            <td><c:out value="${cause.amountDonated}"/> &euro;/
-                <c:out value="${cause.budgetTarget}"/> &euro;
+            <td><c:out value="${cause1.amountDonated}"/> &euro;/
+                <c:out value="${cause1.budgetTarget}"/> &euro;
             </td> 
         </tr>
         <tr>
             <th>Organizacion</th>
-            <td><c:out value="${cause.organization}"/></td>
+            <td><c:out value="${cause1.organization}"/></td>
         </tr>
     </table>
 
-    <c:if test="${cause.active == true}">
-        <a href="/causes/${cause.id}/donation/new" class="btn btn-default">Donar</a>
+    <c:if test="${cause1.active == true}">
+        <a href="/causes/${cause1.id}/donation/new" class="btn btn-default">Donar</a>
     </c:if>
 
     <br/>

@@ -69,7 +69,7 @@ public class PetController {
 
 	@GetMapping("/pets/inAdoption/{petId}")
 	public ModelAndView inAdoptionPet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId) throws DataAccessException, DuplicatedPetNameException{
-		Pet petToUpdate=this.petService.findPetById(petId);
+		var petToUpdate=this.petService.findPetById(petId);
 		petToUpdate.setInAdoption(true);
 		this.petService.savePet(petToUpdate);  
 		return new ModelAndView("redirect:/owners/{ownerId}");
@@ -77,7 +77,7 @@ public class PetController {
 
 	@GetMapping("/pets/notInAdoption/{petId}")
 	public ModelAndView notInAdoptionPet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId) throws DataAccessException, DuplicatedPetNameException{
-		Pet petToUpdate=this.petService.findPetById(petId);
+		var petToUpdate=this.petService.findPetById(petId);
 		petToUpdate.setInAdoption(false);
 		this.petService.savePet(petToUpdate);  
 		return new ModelAndView("redirect:/owners/{ownerId}");

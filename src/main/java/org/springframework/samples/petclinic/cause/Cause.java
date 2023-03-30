@@ -83,7 +83,7 @@ public class Cause extends BaseEntity {
 
 	protected Collection<Donation> getDonationsInternal() {
 		if (this.donations == null) {
-			this.donations = new ArrayList<Donation>();
+			this.donations = new ArrayList<>();
 		}
 		return this.donations;
 	}

@@ -13,21 +13,21 @@
     <table class="table table-striped">
         <tr>
             <th>Nombre</th>
-            <td><b><c:out value="${cause.name}"/></b></td>
+            <td><b><c:out value="${cause2.name}"/></b></td>
         </tr>
         <tr>
             <th>Descripcion</th>
-            <td><c:out value="${cause.description}"/></td>
+            <td><c:out value="${cause2.description}"/></td>
         </tr>
         <tr>
             <th>Presupuesto</th>
-            <td><c:out value="${cause.amountDonated}"/> &euro;/
-                <c:out value="${cause.budgetTarget}"/> &euro;
+            <td><c:out value="${cause2.amountDonated}"/> &euro;/
+                <c:out value="${cause2.budgetTarget}"/> &euro;
             </td> 
         </tr>
         <tr>
             <th>Organizacion</th>
-            <td><c:out value="${cause.organization}"/></td>
+            <td><c:out value="${cause2.organization}"/></td>
         </tr>
     </table>
 

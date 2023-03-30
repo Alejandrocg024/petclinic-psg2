@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.cause.exceptions.ReachedBudgetTargetException;
+import org.springframework.samples.petclinic.cause.exceptions.DonationException;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,7 @@ public class CauseController {
 
     @GetMapping()
 	public ModelAndView listCauses(Cause cause) {
-        ModelAndView mav = new ModelAndView("causes/listCauses");
+        var mav = new ModelAndView("causes/listCauses");
         List<Cause> causes = causeService.getCauses();
         mav.addObject("causes", causes);
         return mav;
@@ -43,26 +43,25 @@ public class CauseController {
 
     @GetMapping("/{causeId}")
 	public ModelAndView showCause(@PathVariable("causeId") int causeId, Principal principal) {
-		ModelAndView mav = new ModelAndView("causes/causeDetails");
+		var mav = new ModelAndView("causes/causeDetails");
         List<Donation> donaciones = causeService.getCauseById(causeId).getDonations();
-        Cause causa = causeService.getCauseById(causeId);
-		mav.addObject("cause",causa);
+        var causa = causeService.getCauseById(causeId);
+		mav.addObject("cause1",causa);
 		mav.addObject("donations", donaciones);
 		return mav;
 	}
 	@GetMapping(value = "/new")
 	public ModelAndView initCreationFormCause() {
-        ModelAndView mav = new ModelAndView(VIEWS_CAUSES_CREATE_FORM);
-		Cause causa = new Cause();
+        var mav = new ModelAndView(VIEWS_CAUSES_CREATE_FORM);
+		var causa = new Cause();
 		mav.addObject("cause", causa);
 		return mav;
     }
 
 	@PostMapping(value = "/new")
 	public ModelAndView processCauseCreationForm(@Valid Cause cause, BindingResult result) {
-		ModelAndView mav = new ModelAndView(VIEWS_CAUSES_CREATE_FORM);
+		var mav = new ModelAndView(VIEWS_CAUSES_CREATE_FORM);
 		if (result.hasErrors()) {
-			mav.addObject("cause", cause);
 			return mav;
 		} else {
 			causeService.saveCause(cause);
@@ -72,22 +71,21 @@ public class CauseController {
 
     @GetMapping(value = "/{causeId}/donation/new")
 	public ModelAndView initDonationForm(@PathVariable("causeId") int causeId, Principal principal) {
-        ModelAndView mav = new ModelAndView(VIEWS_DONATION_CREATE_FORM);
-		Donation donation = new Donation();
+        var mav = new ModelAndView(VIEWS_DONATION_CREATE_FORM);
+		var donation = new Donation();
 		mav.addObject("donation", donation);
-		mav.addObject("cause", causeService.getCauseById(causeId));
+		mav.addObject("cause2", causeService.getCauseById(causeId));
 		mav.addObject("owner", ownerService.findOwnerByUserName(principal.getName()));
 		return mav;
     }
 
     @PostMapping(value = "/{causeId}/donation/new")
 	public ModelAndView processDonationForm(@PathVariable("causeId") int causeId, Donation donation, BindingResult result, @NotNull String amount, Principal principal) {
-		ModelAndView mav = new ModelAndView(VIEWS_DONATION_CREATE_FORM);
-		Cause cause = causeService.getCauseById(causeId);
+		var mav = new ModelAndView(VIEWS_DONATION_CREATE_FORM);
+		var cause = causeService.getCauseById(causeId);
 		donation.setOwner(ownerService.findOwnerByUserName(principal.getName()));
 		donation.setAmount(Double.valueOf(amount));
 		donation.setCause(cause);
-		mav.addObject("cause", causeService.getCauseById(causeId));
 		mav.addObject("owner", ownerService.findOwnerByUserName(principal.getName()));
 		if (result.hasErrors()) {
 			return mav;
@@ -99,7 +97,7 @@ public class CauseController {
 					this.causeService.saveCause(cause);
 				}
 				this.causeService.saveDonation(donation);
-			}catch(ReachedBudgetTargetException ex){
+			}catch(DonationException ex){
 				String mensaje = donationErrorMessage(donation);
 				mav.addObject("error", mensaje);
 				return mav;
@@ -109,7 +107,7 @@ public class CauseController {
 	} 
 
 	private String donationErrorMessage(Donation donation){
-        String res = "";
+        var res = "";
 		Double doub = causeService.getSumDonationsCause(donation.getCause().getId());
 		if(doub ==null){
 			doub = 0.0;
@@ -118,6 +116,11 @@ public class CauseController {
             res = "Con esta donación estarías superando el objetivo";
 			donation.getCause().setActive(false);
         }
+		if(donation.getAmount()<=0){
+			res = "El numero tiene que ser mayor que 0";
+		}
+		
+
 		return res;
 }
     
