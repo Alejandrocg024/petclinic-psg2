@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.us.psg2</groupId>
     <artifactId>spring-petclinic.psg2.2223-G3-31</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.2</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
