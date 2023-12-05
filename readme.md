@@ -1,4 +1,14 @@
-# Spring PetClinic Sample Application 
+<br />
+<div align="center">
+
+  <h3 align="center">Spring PetClinic Sample Application </h3>
+
+</div>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
 This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the PSG2 course. The main changes that have been performed were:
 - Trimming several parts of the application to keep the example low
